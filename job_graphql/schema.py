@@ -9,4 +9,5 @@ class Query(database_transfer.schema.Query, graphene.ObjectType):
 class Mutation(database_transfer.schema.Mutation, graphene.ObjectType):
     pass
 
+
 schema = graphene.Schema(query=Query, mutation=Mutation)
