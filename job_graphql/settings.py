@@ -25,7 +25,12 @@ SECRET_KEY = 'rg+ce@%=0gqy2+zkvlx&9t@u4x)$u@^nsr3$t^d6@@q)0m60v6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '35.186.148.118',
+    'truongnhathoang.media',
+    '0.0.0.0',
+    'localhost'
+]
 
 
 # Application definition
