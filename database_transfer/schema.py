@@ -12,7 +12,18 @@ class JobType(DjangoObjectType):
 # Create a Query type
 class Query(ObjectType):
     job = graphene.Field(JobType, id=graphene.Int())
-    jobs = graphene.List(JobType, orderBy=graphene.List(of_type=graphene.String), limit=graphene.Int())
+    jobs_by_salary = graphene.List(
+        JobType,
+        args={
+            'min': graphene.Int(),
+            'max': graphene.Int(),
+        }
+    )
+    jobs = graphene.List(
+        JobType,
+        orderBy=graphene.List(of_type=graphene.String),
+        limit=graphene.Int()
+    )
     total_job = graphene.Int()
 
     def resolve_total_job(self, info, **kwargs):
@@ -25,6 +36,11 @@ class Query(ObjectType):
             return Job.objects.get(pk=id)
 
         return None
+
+    def resolve_jobs_by_salary(self, info, **kwargs):
+        _min = kwargs.get("min", None)
+        _max = kwargs.get("max", None)
+        return Job.objects.filter(salary_normalize__gte=_min, salary_normalize__lte=_max)
 
     def resolve_jobs(self, info, **kwargs):
         orderBy = kwargs.get("orderBy", None)
