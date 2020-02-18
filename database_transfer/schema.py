@@ -78,84 +78,88 @@ class JobInput(graphene.InputObjectType):
     other_info = graphene.String()
 
 
-# class CreateRealEstates(graphene.Mutation):
-#     class Arguments:
-#         input = RealEstatesInput(required=True)
-#
-#     ok = graphene.Boolean()
-#     realEstate = graphene.Field(RealEstatesType)
-#
-#     @staticmethod
-#     def mutate(root, info, input=None):
-#         ok = True
-#         images = list()
-#         for image_input in input.images:
-#             image = ProjectImages.objects.get(pk=image_input.id)
-#             if image is None:
-#                 return CreateRealEstates(ok=False, realEstate=None)
-#             images.append(image)
-#
-#         real_estates_instance = RealEstates(
-#             name=input.name,
-#             investor=input.investor,
-#             provider=input.provider,
-#             address=input.address,
-#             totalAcreage=input.totalAcreage,
-#             constructionAcreage=input.constructionAcreage,
-#             buildingDensity=input.buildingDensity,
-#             type=input.type,
-#             price=input.price,
-#             handoverDate=input.handoverDate,
-#             scale=input.scale,
-#             link=input.link,
-#             introduction=input.introduction,
-#             province=input.province,
-#             district=input.district,
-#         )
-#         real_estates_instance.save()
-#         real_estates_instance.images.set(images)
-#         return CreateRealEstates(ok=ok, realEstate=real_estates_instance)
-#
-#
-# class UpdateRealEstates(graphene.Mutation):
-#     class Arguments:
-#         id = graphene.Int(required=True)
-#         input = RealEstatesInput(required=True)
-#
-#     ok = graphene.Boolean()
-#     realEstate = graphene.Field(RealEstatesType)
-#
-#     @staticmethod
-#     def mutate(root, info, id, input=None):
-#         ok = False
-#         real_estates_instance = RealEstates.objects.get(pk=id)
-#         if real_estates_instance:
-#             ok = True
-#             images = list()
-#             for image_input in input.images:
-#                 image = ProjectImages.objects.get(pk=image_input.id)
-#                 if image is None:
-#                     return UpdateRealEstates(ok=False, movie=None)
-#                 images.append(image)
-#             real_estates_instance.name = input.name
-#             real_estates_instance.investor = input.investor
-#             real_estates_instance.provider = input.investor
-#             real_estates_instance.address = input.address
-#             real_estates_instance.totalAcreage = input.totalAcreage
-#             real_estates_instance.constructionAcreage = input.constructionAcreage
-#             real_estates_instance.buildingDensity = input.buildingDensity
-#             real_estates_instance.type = input.type
-#             real_estates_instance.price = input.price
-#             real_estates_instance.handoverDate = input.handoverDate
-#             real_estates_instance.scale = input.scale
-#             real_estates_instance.link = input.link
-#             real_estates_instance.introduction = input.introduction
-#             real_estates_instance.province = input.province,
-#             real_estates_instance.district = input.district,
-#             real_estates_instance.images.set(images),
-#             real_estates_instance.save()
-#             return UpdateRealEstates(ok=ok, realEstate=real_estates_instance)
-#         return UpdateRealEstates(ok=ok, realEstate=None)
+class CreateJob(graphene.Mutation):
+    class Arguments:
+        input = JobInput(required=True)
+
+    ok = graphene.Boolean()
+    investors = graphene.Field(JobType)
+
+    @staticmethod
+    def mutate(root, info, input=None):
+        ok = True
+        projects = list()
+        job_instance = Job(
+            id=input.id,
+            title=input.title,
+            created_time=input.created_time,
+            currency_unit=input.currency_unit,
+            salary=input.salary,
+            salary_normalize=input.salary_normalize,
+            url=input.url,
+            company=input.company,
+            location=input.location,
+            info=input.info,
+            degree_requirements=input.degree_requirements,
+            deadline_submit=input.deadline_submit,
+            experience=input.experience,
+            no_of_opening=input.no_of_opening,
+            formality=input.formality,
+            position=input.position,
+            gender_requirements=input.gender_requirements,
+            career=input.career,
+            description=input.description,
+            benefit=input.benefit,
+            job_requirements=input.job_requirements,
+            profile_requirements=input.profile_requirements,
+            contact=input.contact,
+            other_info=input.other_info
+        )
+        job_instance.save()
+        return CreateJob(ok=ok, investors=job_instance)
+
+
+class UpdateProjectImages(graphene.Mutation):
+    class Arguments:
+        id = graphene.Int(required=True)
+        input = JobInput(required=True)
+
+    ok = graphene.Boolean()
+    projectImages = graphene.Field(JobType)
+
+    @staticmethod
+    def mutate(root, info, id, input=None):
+        ok = False
+        job_instance = Job.objects.get(pk=id)
+        if job_instance:
+            ok = True
+            job_instance.id = input.id
+            job_instance.title = input.title
+            job_instance.created_time = input.created_time
+            job_instance.currency_unit = input.currency_unit
+            job_instance.salary = input.salary
+            job_instance.salary_normalize = input.salary_normalize
+            job_instance.url = input.url
+            job_instance.company = input.company
+            job_instance.location = input.location
+            job_instance.info = input.info
+            job_instance.degree_requirements = input.degree_requirements
+            job_instance.deadline_submit = input.deadline_submit
+            job_instance.experience = input.experience
+            job_instance.no_of_opening = input.no_of_opening
+            job_instance.formality = input.formality
+            job_instance.position = input.position
+            job_instance.gender_requirements = input.gender_requirements
+            job_instance.career = input.career
+            job_instance.description = input.description
+            job_instance.benefit = input.benefit
+            job_instance.job_requirements = input.job_requirements
+            job_instance.profile_requirements = input.profile_requirements
+            job_instance.contact = input.contact
+            job_instance.other_info = input.other_info
+            job_instance.save()
+            return UpdateProjectImages(ok=ok, projectImages=job_instance)
+        return UpdateProjectImages(ok=ok, projectImages=None)
 
 
 class DeleteJob(graphene.Mutation):
