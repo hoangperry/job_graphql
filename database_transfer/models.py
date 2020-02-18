@@ -1,8 +1,9 @@
 from django.db import models
 
 
-class RealEstates(models.Model):
-    id = models.BigIntegerField()
+class Job(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    title = models.TextField()
     created_time = models.DateTimeField(auto_now=True)
     currency_unit = models.TextField()
     salary = models.TextField()
@@ -27,7 +28,8 @@ class RealEstates(models.Model):
     other_info = models.TextField()
 
     def __str__(self):
-        return self.name
+        return self.title
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('title',)
+        db_table = 'job'
